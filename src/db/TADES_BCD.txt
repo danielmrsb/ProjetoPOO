@@ -1,0 +1,39 @@
+create database TADES_BCD;
+
+use TADES_BCD;
+
+create table tbl_setor(
+    id_setor int not null primary key auto_increment,
+    nome_setor varchar(50) not null
+);
+
+create table tbl_usuario(
+    id_usuario int not null primary key auto_increment,
+    nome varchar(75) not null,
+    email varchar(50) not null,
+    senha varchar(25) not null,
+    fk_setor int not null,
+    status int not null,
+    foreign key (fk_setor) references tbl_setor(id_setor)
+);
+
+create table tbl_produtos(
+    id_produto int not null primary key auto_increment,
+    nome varchar(50) not null,
+    descricao varchar(100),
+    tipo varchar(10) not null,
+    qtd_estoque int not null,
+    valor_unidade double not null,
+    status int not null
+);
+
+SET @@GLOBAL.TIME_ZONE = '+03:00';
+
+INSERT INTO tbl_setor(nome_setor) VALUES ('TI');
+INSERT INTO tbl_setor(nome_setor) VALUES ('BackOffice');
+INSERT INTO tbl_setor(nome_setor) VALUES ('Gerente regional');
+INSERT INTO tbl_setor(nome_setor) VALUES ('Gerente global');
+INSERT INTO tbl_setor(nome_setor) VALUES ('Diretor');
+
+INSERT INTO tbl_usuario(nome, email, senha, status, fk_setor)
+	VALUES ('Milena Flores', 'diretoria@email.com','123', 0, 5);
