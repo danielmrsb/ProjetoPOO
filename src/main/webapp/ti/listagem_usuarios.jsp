@@ -56,10 +56,6 @@
                     Cadastrar Usuário
                 </button>
             </form>
-            <button type="submit" class="btn btn-danger">
-                <i class="far fa-trash-alt"></i>
-                Excluir Selecionado(s)
-            </button>
 
             <br>
             <br>
@@ -67,7 +63,6 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th class="coluna"><input type="checkbox"></th>
                         <th class="coluna" scope="col">Codigo</th>
                         <th class="coluna" scope="col">Nome</th>
                         <th class="coluna" scope="col">Email</th>
@@ -78,9 +73,6 @@
                 <tbody id="teste">  
                     <c:forEach var="usuarios" items="${listaUsuarios}">                
                         <tr>
-                            <td>
-                                <input name="selected" value="${usuarios.codigo}" type="checkbox"> 
-                            </td>
                             <td class="coluna" name="codigo" ><c:out value="${usuarios.codigo}" /></td>
                             <td class="coluna" name="nome" ><c:out value="${usuarios.nome}" /></td>
                             <td class="coluna" name="email" ><c:out value="${usuarios.email}" /></td>

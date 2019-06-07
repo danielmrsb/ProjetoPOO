@@ -84,29 +84,6 @@ public class ProdutoDAO {
         return true;
     }
 
-    public static boolean excluirProdutos(String[] codigos) {
-        Connection conn = db.obterConexao();
-        try {
-            PreparedStatement query = conn.prepareStatement("UPDATE tbl_produtos SET status = 1 WHERE id_produto = ?");
-
-            for (String codigo : codigos) {
-                query.setInt(1, Integer.parseInt(codigo));
-                query.execute();
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-            return false;
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
-        }
-
-        return true;
-    }
-
     public static ArrayList<Produto> getProdutos() {
         ArrayList<Produto> produtos = new ArrayList<>();
         Connection conn = db.obterConexao();
@@ -144,10 +121,9 @@ public class ProdutoDAO {
         Produto produto = null;
         Connection conn = db.obterConexao();
         try {
-            PreparedStatement query = conn.prepareStatement("SELECT p.id_produto, p.nome, p.descricao,"
-                    + " p.tipo, p.qtd_estoque, p.valor_unidade,"
-                    + " CONCAT(cidade, \" - \", estado) \n"
-                    + " FROM tbl_produtos WHERE p.id_produto = ? AND p.status = 0;");
+            PreparedStatement query = conn.prepareStatement("SELECT id_produto, nome, descricao,"
+                    + " tipo, qtd_estoque, valor_unidade"
+                    + " FROM tbl_produtos WHERE id_produto = ? AND status = 0;");
 
             query.setInt(1, codigo);
             ResultSet rs = query.executeQuery();

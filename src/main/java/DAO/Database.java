@@ -22,7 +22,7 @@ public class Database {
         usuario = "root";
         senha = "";
         nomeDB = "TADES_BCD";
-        url = "jdbc:mysql://127.0.0.1:3306/" + nomeDB + "?useTimezone=true&serverTimezone=UTC";
+        url = "jdbc:mysql://127.0.0.1:3307/" + nomeDB + "?useTimezone=true&serverTimezone=UTC";
     }
 
     public String getDriver() {

@@ -56,36 +56,30 @@
                     Cadastrar Produto
                 </Button>
             </form>
-            <button type="submit" class="btn btn-danger">
-                <i class="far fa-trash-alt"></i>
-                Excluir Selecionado(s)
-            </button>
             <br>
             <br>    
 
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th class="coluna" ><input type="checkbox"></th>
                         <th class="coluna" scope="col">Codigo</th>
                         <th class="coluna" scope="col">Nome</th>
                         <th class="coluna" scope="col">Descricao</th>
                         <th class="coluna" scope="col">Estoque</th>
                         <th class="coluna" scope="col">Valor unidade</th>
+                        <th class="coluna" scope="col">Tipo</th>
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <c:forEach var = "produtos"  items="${listaProdutos}">
-                            <td class="coluna" >
-                                <input name="selected" value="${produtos.codigo}" type="checkbox"> 
-                            </td>
                             <td class="coluna" name="codigo"><c:out value ="${produtos.codigo}"/></td>
                             <td class="coluna" name="nome"><c:out value ="${produtos.nome}"/></td>
                             <td class="coluna" name="descricao"><c:out value ="${produtos.descricao}"/></td>
                             <td class="coluna" name="quantidadeEstoque"><c:out value ="${produtos.quantidadeEstoque}"/></td>
                             <td class="coluna" name="valorUnitario"><c:out value ="${produtos.valorUnitario}"/></td>
+                            <td class="coluna" name="tipo"><c:out value ="${produtos.tipo}"/></td>
                             <td class="btn-group">
                                 <form action="dados_produto" method="POST">
                                     <button name="editarID" value="${produtos.codigo}" type="submit" class="btn btn-success">

@@ -78,29 +78,6 @@ public class UsuarioDAO {
         return true;
     }
 
-    public static boolean excluirUsuarios(String[] codigos) {
-        Connection conn = db.obterConexao();
-        try {
-            PreparedStatement query = conn.prepareStatement("UPDATE tbl_usuario SET status = 1 WHERE id_usuario = ?");
-
-            for (String codigo : codigos) {
-                query.setInt(1, Integer.parseInt(codigo));
-                query.execute();
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-            return false;
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
-        }
-
-        return true;
-    }
-
     public static ArrayList<Usuario> getUsuarios() {
         ArrayList<Usuario> usuarios = new ArrayList<>();
          Connection conn = db.obterConexao();
@@ -135,7 +112,7 @@ public class UsuarioDAO {
         Connection conn = db.obterConexao();
         try {
             PreparedStatement query = conn.prepareStatement("SELECT u.id_usuario, u.nome, u.email, u.senha,"
-                    + " u.fk_setor, s.nome_setor, CONCAT(cidade, \" - \", estado)\n"
+                    + " u.fk_setor, s.nome_setor"
                     + " FROM tbl_usuario AS u INNER JOIN tbl_setor AS s ON "
                     + " u.fk_setor = s.id_setor "
                     + " where u.id_usuario = ? AND u.status = 0;");
