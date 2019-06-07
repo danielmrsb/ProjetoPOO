@@ -111,10 +111,9 @@ public class ProdutoDAO {
         ArrayList<Produto> produtos = new ArrayList<>();
         Connection conn = db.obterConexao();
         try {
-            PreparedStatement query = conn.prepareStatement("SELECT p.id_produto, p.nome, p.descricao, p.tipo,"
-                    + " p.qtd_estoque, p.valor_unidade,"
-                    + " CONCAT(cidade, \" - \", estado) \n"
-                    + " FROM tbl_produtos WHERE p.status = 0;");
+            PreparedStatement query = conn.prepareStatement("select p.id_produto, p.nome, p.descricao, p.tipo,"
+                    + " p.qtd_estoque, p.valor_unidade"
+                    + " from tbl_produtos as p where p.status = 0;");
 
             ResultSet rs = query.executeQuery();
 

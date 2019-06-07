@@ -103,10 +103,9 @@ public class UsuarioDAO {
 
     public static ArrayList<Usuario> getUsuarios() {
         ArrayList<Usuario> usuarios = new ArrayList<>();
-        Connection conn = db.obterConexao();
+         Connection conn = db.obterConexao();
         try {
-            PreparedStatement query = conn.prepareStatement("SELECT u.id_usuario, u.nome, u.email, u.senha,"
-                    + "    u.fk_setor, s.nome_setor, CONCAT(cidade, \" - \", estado)\n"
+            PreparedStatement query = conn.prepareStatement("SELECT u.id_usuario, u.nome, u.email, u.senha"
                     + "    FROM tbl_usuario AS u INNER JOIN tbl_setor AS s ON \n"
                     + "    u.fk_setor = s.id_setor \n"
                     + "    WHERE u.status = 0;");
@@ -119,11 +118,8 @@ public class UsuarioDAO {
                             rs.getInt(1),
                             rs.getString(2),
                             rs.getString(3),
-                            rs.getString(4),
-                            rs.getInt(5));
-                    user.setNomeSetor(rs.getString(6));
+                             rs.getString(4));
                     usuarios.add(user);
-
                 }
             }
             conn.close();
@@ -209,13 +205,11 @@ public class UsuarioDAO {
     }
 
     public static Usuario getInfoSessao(String uEmail) {
-        Usuario sessao = null;
+         Usuario sessao = null;
         Connection conn = db.obterConexao();
         try {
-            PreparedStatement query = conn.prepareStatement(" SELECT u.id_usuario, u.nome, u.email, u.fk_setor, \n"
-                    + " concat(f.cidade, \" - \", f.estado) FROM tbl_usuario where email = ?;");
-
-         
+            PreparedStatement query = conn.prepareStatement(" select * from tbl_usuario where email = ?;");
+            
             query.setString(1, uEmail);
 
             ResultSet rs = query.executeQuery();

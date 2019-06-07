@@ -3,6 +3,7 @@ package ServletLogin;
 import DAO.UsuarioDAO;
 import Model.Usuario;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -47,9 +48,14 @@ public class LoginServlet extends HttpServlet {
             if (httpOK) {
                 Usuario infoSessao = UsuarioDAO.getInfoSessao(uEmail);
                 HttpSession sessao = request.getSession();
-                //sessao.setAttribute("nomeUsuario", infoSessao.getNome());
+                sessao.setAttribute("nomeUsuario", infoSessao.getNome());
 
-                response.sendRedirect("../ti/listagem_usuarios.jsp");
+                ArrayList<Usuario> usuarios = UsuarioDAO.getUsuarios();
+                request.setAttribute("listaUsuarios", usuarios);
+
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/ti/listagem_usuarios.jsp");
+                dispatcher.forward(request, response);
+                //response.sendRedirect("../ti/listagem_usuarios.jsp");
             } else {
                 request.setAttribute("varMsg", true);
                 request.setAttribute("msg", "Usuário ou Senha não existem.");

@@ -18,11 +18,11 @@ public class Database {
     private Connection conexao;
 
     public Database() {
-        driver = "com.mysql.cj.jdbc.Driver";
+        driver = "com.mysql.jdbc.Driver";
         usuario = "root";
         senha = "";
         nomeDB = "TADES_BCD";
-        url = "jdbc:mysql://127.0.0.1:3307/" + nomeDB + "?useTimezone=true&serverTimezone=UTC";
+        url = "jdbc:mysql://127.0.0.1:3306/" + nomeDB + "?useTimezone=true&serverTimezone=UTC";
     }
 
     public String getDriver() {
