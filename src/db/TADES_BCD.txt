@@ -30,10 +30,11 @@ create table tbl_produtos(
 SET @@GLOBAL.TIME_ZONE = '+03:00';
 
 INSERT INTO tbl_setor(nome_setor) VALUES ('TI');
-INSERT INTO tbl_setor(nome_setor) VALUES ('BackOffice');
-INSERT INTO tbl_setor(nome_setor) VALUES ('Gerente regional');
-INSERT INTO tbl_setor(nome_setor) VALUES ('Gerente global');
-INSERT INTO tbl_setor(nome_setor) VALUES ('Diretor');
+INSERT INTO tbl_setor(nome_setor) VALUES ('Gerente');
+INSERT INTO tbl_setor(nome_setor) VALUES ('Estoquista');
+
+INSERT INTO tbl_produtos(nome, descricao, tipo, qtd_estoque, valor_unidade, status)
+VALUES ('Rosas', 'Vermelhas', 'Produto', 50, 5, 0);
 
 INSERT INTO tbl_usuario(nome, email, senha, status, fk_setor)
-	VALUES ('Milena Flores', 'diretoria@email.com','123', 0, 5);
+VALUES ('Daniel Morais', 'ti@email.com','123', 0, 1);
