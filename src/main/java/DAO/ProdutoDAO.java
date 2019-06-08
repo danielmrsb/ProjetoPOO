@@ -11,11 +11,13 @@ import java.util.ArrayList;
  *
  * @author daniel.mbarbosa1
  */
-public class ProdutoDAO {
+public class ProdutoDAO implements Editavel{
 
     private static final Database db = new Database();
 
-    public static boolean salvarProduto(Produto p) {
+    @Override
+    public boolean salvar(Object x) {
+        Produto p = (Produto) x;
         Connection conn = db.obterConexao();
         try {
             PreparedStatement query = conn.prepareStatement("INSERT INTO"
@@ -38,7 +40,9 @@ public class ProdutoDAO {
         return true;
     }
 
-    public static boolean atualizarProduto(Produto produto) {
+    @Override
+    public boolean atualizar(Object x) {
+        Produto produto = (Produto) x;
         Connection conn = db.obterConexao();
         try {
             PreparedStatement query = conn.prepareStatement("UPDATE"
@@ -66,7 +70,9 @@ public class ProdutoDAO {
         return true;
     }
 
-    public static boolean excluirProduto(int pCodigo) {
+    @Override
+    public boolean excluir(Object x) {
+        int pCodigo = (int) x;
         Connection conn = db.obterConexao();
         try {
             PreparedStatement query = conn.prepareStatement("UPDATE tbl_produtos SET status = 1 WHERE id_produto = ?");
@@ -84,40 +90,9 @@ public class ProdutoDAO {
         return true;
     }
 
-    public static ArrayList<Produto> getProdutos() {
-        ArrayList<Produto> produtos = new ArrayList<>();
-        Connection conn = db.obterConexao();
-        try {
-            PreparedStatement query = conn.prepareStatement("select p.id_produto, p.nome, p.descricao, p.tipo,"
-                    + " p.qtd_estoque, p.valor_unidade"
-                    + " from tbl_produtos as p where p.status = 0;");
-
-            ResultSet rs = query.executeQuery();
-
-            if (rs != null) {
-                while (rs.next()) {
-                    Produto produto = new Produto(
-                            rs.getInt(1),
-                            rs.getString(2),
-                            rs.getString(3),
-                            rs.getString(4),
-                            rs.getInt(5),
-                            rs.getDouble(6));
-                    produtos.add(produto);
-
-                }
-            }
-
-            conn.close();
-
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-
-        return produtos;
-    }
-
-    public static Produto getProduto(int codigo) {
+    @Override
+    public Produto get(Object x) {
+        int codigo = (int) x;
         Produto produto = null;
         Connection conn = db.obterConexao();
         try {
@@ -147,5 +122,37 @@ public class ProdutoDAO {
         }
 
         return produto;
+    }
+    
+    @Override
+    public ArrayList<Produto> getVarios() {
+        ArrayList<Produto> produtos = new ArrayList<>();
+        Connection conn = db.obterConexao();
+        try {
+            PreparedStatement query = conn.prepareStatement("select p.id_produto, p.nome, p.descricao, p.tipo,"
+                    + " p.qtd_estoque, p.valor_unidade"
+                    + " from tbl_produtos as p where p.status = 0;");
+
+            ResultSet rs = query.executeQuery();
+
+            if (rs != null) {
+                while (rs.next()) {
+                    Produto produto = new Produto(
+                            rs.getInt(1),
+                            rs.getString(2),
+                            rs.getString(3),
+                            rs.getString(4),
+                            rs.getInt(5),
+                            rs.getDouble(6));
+                    produtos.add(produto);
+
+                }
+            }
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return produtos;
     }
 }

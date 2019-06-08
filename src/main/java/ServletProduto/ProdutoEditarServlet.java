@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ProdutoEditarServlet", urlPatterns = {"/produtos/editar_produto"})
 public class ProdutoEditarServlet extends HttpServlet {
 
+    ProdutoDAO ProDAO = new ProdutoDAO();
     private void processaRequisicao(String metodoHttp, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -58,7 +59,8 @@ public class ProdutoEditarServlet extends HttpServlet {
         }
 
         if (error) {
-            Produto produto = ProdutoDAO.getProduto(Integer.parseInt(fCodigo));
+            ProdutoDAO ProDAO = new ProdutoDAO();
+            Produto produto = ProDAO.get(Integer.parseInt(fCodigo));
 
             request.setAttribute("acao", "editar");
             request.setAttribute("codigo", produto.getCodigo());
@@ -82,10 +84,10 @@ public class ProdutoEditarServlet extends HttpServlet {
                 produto.setDescricao(fDescricao);
             }
             produto.setCodigo(Integer.parseInt(fCodigo));
-            boolean httpOK = ProdutoDAO.atualizarProduto(produto);
+            boolean httpOK = ProDAO.atualizar(produto);
 
             if (httpOK) {
-                ArrayList<Produto> produtos = ProdutoDAO.getProdutos();
+                ArrayList<Produto> produtos = ProDAO.getVarios();
                 request.setAttribute("listaProdutos", produtos);
 
                 request.setAttribute("varMsg", true);

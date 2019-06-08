@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ProdutoCadastroServlet", urlPatterns = {"/produtos/cadastro_produto"})
 public class ProdutoCadastroServlet extends HttpServlet {
 
+    ProdutoDAO ProDAO = new ProdutoDAO();
     private void processaRequisicao(String metodoHttp, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -64,10 +65,10 @@ public class ProdutoCadastroServlet extends HttpServlet {
             if (fDescricao.length() != 0) {
                 produtos.setDescricao(fDescricao);
             }
-            boolean httpOK = ProdutoDAO.salvarProduto(produtos);
+            boolean httpOK = ProDAO.salvar(produtos);
 
             if (httpOK) {
-                ArrayList<Produto> produto = ProdutoDAO.getProdutos();
+                ArrayList<Produto> produto = ProDAO.getVarios();
                 request.setAttribute("listaProdutos", produto);
 
                 request.setAttribute("varMsg", true);

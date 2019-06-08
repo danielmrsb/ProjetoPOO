@@ -126,10 +126,10 @@
                 <div class="row text-center">
                     <div class="col-12 col-md">
                         <img class="mb-2" src="../assets/img/logo.png" alt="">
-                        <small class="d-block mb-3 text-muted">&copy; Project Solutions - 2019</small>
+                        <small class="d-block mb-3 text-muted">&copy; Brothers Ltda - 2019</small>
                     </div>
                     <div class="col-12 col-md">
-                        <h5 class="title-footer">Project Solutions</h5>
+                        <h5 class="title-footer">Brothers Ltda</h5>
                         <ul class="list-unstyled text-small">
                             <li class="text-muted">Daniel Morais</li>
                             <li class="text-muted">Guilherme Ricardo</li>

@@ -11,11 +11,13 @@ import java.util.ArrayList;
  *
  * @author daniel.mbarbosa1
  */
-public class UsuarioDAO {
+public class UsuarioDAO implements Editavel {
 
     private static final Database db = new Database();
 
-    public static boolean salvarUsuario(Usuario u) {
+    @Override
+    public boolean salvar(Object x) {
+        Usuario u = (Usuario) x;
         Connection conn = db.obterConexao();
         try {
             PreparedStatement query = conn.prepareStatement("INSERT INTO "
@@ -39,7 +41,9 @@ public class UsuarioDAO {
         return true;
     }
 
-    public static boolean alterarUsuario(Usuario u) {
+    @Override
+    public boolean atualizar(Object x) {
+        Usuario u = (Usuario) x;
         Connection conn = db.obterConexao();
         try {
             PreparedStatement query = conn.prepareStatement("UPDATE"
@@ -61,7 +65,9 @@ public class UsuarioDAO {
         return true;
     }
 
-    public static boolean excluirUsuario(int uCodigo) {
+    @Override
+    public boolean excluir(Object x) {
+        int uCodigo = (int) x;
         Connection conn = db.obterConexao();
         try {
             PreparedStatement query = conn.prepareStatement("UPDATE tbl_usuario SET status = 1 WHERE id_usuario = ?");
@@ -78,36 +84,9 @@ public class UsuarioDAO {
         return true;
     }
 
-    public static ArrayList<Usuario> getUsuarios() {
-        ArrayList<Usuario> usuarios = new ArrayList<>();
-         Connection conn = db.obterConexao();
-        try {
-            PreparedStatement query = conn.prepareStatement("SELECT u.id_usuario, u.nome, u.email, u.senha"
-                    + "    FROM tbl_usuario AS u INNER JOIN tbl_setor AS s ON \n"
-                    + "    u.fk_setor = s.id_setor \n"
-                    + "    WHERE u.status = 0;");
-
-            ResultSet rs = query.executeQuery();
-
-            if (rs != null) {
-                while (rs.next()) {
-                    Usuario user = new Usuario(
-                            rs.getInt(1),
-                            rs.getString(2),
-                            rs.getString(3),
-                             rs.getString(4));
-                    usuarios.add(user);
-                }
-            }
-            conn.close();
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-
-        return usuarios;
-    }
-
-    public static Usuario getUsuario(int codigoUsuario) {
+    @Override
+    public Object get(Object x) {
+        int codigoUsuario = (int) x;
         Usuario usuarios = null;
         Connection conn = db.obterConexao();
         try {
@@ -129,6 +108,38 @@ public class UsuarioDAO {
                             rs.getInt(5));
                     user.setNomeSetor(rs.getString(6));
                     usuarios = user;
+                }
+            }
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return usuarios;
+    }
+
+    @Override
+    public ArrayList<Usuario> getVarios() {
+        ArrayList<Usuario> usuarios = new ArrayList<>();
+        Connection conn = db.obterConexao();
+        try {
+            PreparedStatement query = conn.prepareStatement("SELECT u.id_usuario, u.nome, u.email, u.senha, s.id_setor, s.nome_setor"
+                    + "    FROM tbl_usuario AS u INNER JOIN tbl_setor AS s ON \n"
+                    + "    u.fk_setor = s.id_setor \n"
+                    + "    WHERE u.status = 0;");
+
+            ResultSet rs = query.executeQuery();
+
+            if (rs != null) {
+                while (rs.next()) {
+                    Usuario user = new Usuario(
+                            rs.getInt(1),
+                            rs.getString(2),
+                            rs.getString(3),
+                            rs.getString(4),
+                            rs.getInt(5),
+                            rs.getString(6));
+                    usuarios.add(user);
                 }
             }
             conn.close();
@@ -182,11 +193,11 @@ public class UsuarioDAO {
     }
 
     public static Usuario getInfoSessao(String uEmail) {
-         Usuario sessao = null;
+        Usuario sessao = null;
         Connection conn = db.obterConexao();
         try {
             PreparedStatement query = conn.prepareStatement(" select * from tbl_usuario where email = ?;");
-            
+
             query.setString(1, uEmail);
 
             ResultSet rs = query.executeQuery();

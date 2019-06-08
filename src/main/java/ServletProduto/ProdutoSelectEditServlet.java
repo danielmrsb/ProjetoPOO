@@ -23,7 +23,8 @@ public class ProdutoSelectEditServlet extends HttpServlet {
         String pCodigo = request.getParameter("editarID");
         String valor_unitario;
         
-        Produto produto = ProdutoDAO.getProduto(Integer.parseInt(pCodigo));
+        ProdutoDAO ProDAO = new ProdutoDAO();
+        Produto produto = ProDAO.get(Integer.parseInt(pCodigo));
         
         request.setAttribute("acao", "editar");
         request.setAttribute("codigo", produto.getCodigo());

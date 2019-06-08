@@ -18,11 +18,12 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "UsuarioSelectEditServlet", urlPatterns = {"/ti/dados_usuario"})
 public class UsuarioSelectEditServlet extends HttpServlet {
 
+    UsuarioDAO UsuDAO = new UsuarioDAO();
     private void processaRequisicao(String metodoHttp, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String cCodigo = request.getParameter("editarID");
-        Usuario usuario = UsuarioDAO.getUsuario(Integer.parseInt(cCodigo));
+        Usuario usuario = (Usuario) UsuDAO.get(Integer.parseInt(cCodigo));
        
         ArrayList<Usuario> setores = UsuarioDAO.getSetoresCadastro();   
         

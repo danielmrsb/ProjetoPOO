@@ -18,10 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ProdutoListaServlet", urlPatterns = {"/produtos/listagem_produtos"})
 public class ProdutoListaServlet extends HttpServlet {
 
+    ProdutoDAO ProDAO = new ProdutoDAO();
     private void processaRequisicao(String metodoHttp, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        ArrayList<Produto> produtos = ProdutoDAO.getProdutos();
+        ArrayList<Produto> produtos = ProDAO.getVarios();
         request.setAttribute("listaProdutos", produtos);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/produtos/listagem_produtos.jsp");

@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "LoginServlet", urlPatterns = {"/login/valida_usuario"})
 public class LoginServlet extends HttpServlet {
 
+    UsuarioDAO UsuDAO = new UsuarioDAO();
     private void processaRequisicao(String metodoHttp, HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
@@ -50,12 +51,11 @@ public class LoginServlet extends HttpServlet {
                 HttpSession sessao = request.getSession();
                 sessao.setAttribute("nomeUsuario", infoSessao.getNome());
 
-                ArrayList<Usuario> usuarios = UsuarioDAO.getUsuarios();
+                ArrayList<Usuario> usuarios = UsuDAO.getVarios();
                 request.setAttribute("listaUsuarios", usuarios);
 
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/ti/listagem_usuarios.jsp");
                 dispatcher.forward(request, response);
-                //response.sendRedirect("../ti/listagem_usuarios.jsp");
             } else {
                 request.setAttribute("varMsg", true);
                 request.setAttribute("msg", "Usuário ou Senha não existem.");

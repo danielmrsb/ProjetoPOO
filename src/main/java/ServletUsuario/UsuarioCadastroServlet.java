@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "UsuarioCadastroServlet", urlPatterns = {"/ti/cadastro_usuario"})
 public class UsuarioCadastroServlet extends HttpServlet {
 
+    UsuarioDAO UsuDAO = new UsuarioDAO();
     private void processaRequisicao(String metodoHttp, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -62,10 +63,10 @@ public class UsuarioCadastroServlet extends HttpServlet {
             dispatcher.forward(request, response);
         } else {
             Usuario usuario = new Usuario(cNome, cEmail, cSenha, Integer.parseInt(cSetor));
-            boolean httpOK = UsuarioDAO.salvarUsuario(usuario);
+            boolean httpOK = UsuDAO.salvar(usuario);
 
             if (httpOK) {
-                ArrayList<Usuario> usuarios = UsuarioDAO.getUsuarios();
+                ArrayList<Usuario> usuarios = UsuDAO.getVarios();
                 request.setAttribute("listaUsuarios", usuarios);
 
                 request.setAttribute("varMsg", true);

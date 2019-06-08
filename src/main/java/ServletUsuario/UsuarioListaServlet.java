@@ -18,10 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "UsuarioListaServlet", urlPatterns = {"/ti/listagem_usuarios"})
 public class UsuarioListaServlet extends HttpServlet {
 
+    UsuarioDAO UsuDAO = new UsuarioDAO();
     private void processaRequisicao(String metodoHttp, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        ArrayList<Usuario> usuarios = UsuarioDAO.getUsuarios();
+        ArrayList<Usuario> usuarios = UsuDAO.getVarios();
         request.setAttribute("listaUsuarios", usuarios);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/ti/listagem_usuarios.jsp");

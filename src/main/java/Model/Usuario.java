@@ -34,6 +34,15 @@ public class Usuario extends Funcionario{
         this.setor = setor;
     }
 
+    public Usuario(int codigo, String nome, String email, String senha, int setor, String nomeSetor) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.setor = setor;
+        this.nomeSetor = nomeSetor;
+    }
+    
     public Usuario(int codigo, String nome, String email, String senha, int setor) {
         this.codigo = codigo;
         this.nome = nome;

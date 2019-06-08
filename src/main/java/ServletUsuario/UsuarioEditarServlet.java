@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "UsuarioEditarServlet", urlPatterns = {"/ti/editar_usuario"})
 public class UsuarioEditarServlet extends HttpServlet {
 
+    UsuarioDAO UsuDAO = new UsuarioDAO();
     private void processaRequisicao(String metodoHttp, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -60,7 +61,7 @@ public class UsuarioEditarServlet extends HttpServlet {
         }
 
         if (error) {
-            Usuario usuario = UsuarioDAO.getUsuario(Integer.parseInt(cCodigo));
+            Usuario usuario = (Usuario) UsuDAO.get(Integer.parseInt(cCodigo));
 
             ArrayList<Usuario> setores = UsuarioDAO.getSetoresCadastro();
 
@@ -81,10 +82,10 @@ public class UsuarioEditarServlet extends HttpServlet {
         } else {
             Usuario usuario = new Usuario(cNome, cEmail, cSenha, Integer.parseInt(cSetor));
             usuario.setCodigo(Integer.parseInt(cCodigo));
-            boolean httpOK = UsuarioDAO.alterarUsuario(usuario);
+            boolean httpOK = UsuDAO.atualizar(usuario);
 
             if (httpOK) {
-                ArrayList<Usuario> usuarios = UsuarioDAO.getUsuarios();
+                ArrayList<Usuario> usuarios = UsuDAO.getVarios();
                 request.setAttribute("listaUsuarios", usuarios);
 
                 request.setAttribute("varMsg", true);

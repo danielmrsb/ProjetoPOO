@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ProdutoExcluirServlet", urlPatterns = {"/produtos/excluir_produto"})
 public class ProdutoExcluirServlet extends HttpServlet {
 
+    ProdutoDAO ProDAO = new ProdutoDAO();
     protected void processaRequisicao(String HttpMethod, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -33,7 +34,7 @@ public class ProdutoExcluirServlet extends HttpServlet {
         }
 
         if (error) {
-            ArrayList<Produto> produtos = ProdutoDAO.getProdutos();
+            ArrayList<Produto> produtos = ProDAO.getVarios();
             request.setAttribute("listaProdutos", produtos);
 
             request.setAttribute("varMsg", true);
@@ -44,9 +45,9 @@ public class ProdutoExcluirServlet extends HttpServlet {
             
         } else {
             
-            boolean httpOk = ProdutoDAO.excluirProduto(Integer.parseInt(pCodigo));
+            boolean httpOk = ProDAO.excluir(Integer.parseInt(pCodigo));
             if (httpOk) {
-                ArrayList<Produto> produtos = ProdutoDAO.getProdutos();
+                ArrayList<Produto> produtos = ProDAO.getVarios();
                 request.setAttribute("listaProdutos", produtos);
 
                 request.setAttribute("varMsg", true);
@@ -55,7 +56,7 @@ public class ProdutoExcluirServlet extends HttpServlet {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/produtos/listagem_produtos.jsp");
                 dispatcher.forward(request, response);
             } else {
-                ArrayList<Produto> produtos = ProdutoDAO.getProdutos();
+                ArrayList<Produto> produtos = ProDAO.getVarios();
                 request.setAttribute("listaProdutos", produtos);
 
                 request.setAttribute("varMsg", true);

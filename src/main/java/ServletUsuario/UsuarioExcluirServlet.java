@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "UsuarioExcluirServlet", urlPatterns = {"/ti/excluir_usuario"})
 public class UsuarioExcluirServlet extends HttpServlet {
 
+    UsuarioDAO UsuDAO = new UsuarioDAO();
     protected void processaRequisicao(String HttpMethod, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -33,7 +34,7 @@ public class UsuarioExcluirServlet extends HttpServlet {
         }
 
         if (error) {
-            ArrayList<Usuario> usuarios = UsuarioDAO.getUsuarios();
+            ArrayList<Usuario> usuarios = UsuDAO.getVarios();
             request.setAttribute("listaUsuarios", usuarios);
 
             request.setAttribute("varMsg", true);
@@ -42,9 +43,9 @@ public class UsuarioExcluirServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/ti/listagem_usuarios.jsp");
             dispatcher.forward(request, response);
         } else {
-            boolean httpOk = UsuarioDAO.excluirUsuario(Integer.parseInt(cCodigo));
+            boolean httpOk = UsuDAO.excluir(Integer.parseInt(cCodigo));
             if (httpOk) {
-                ArrayList<Usuario> usuarios = UsuarioDAO.getUsuarios();
+                ArrayList<Usuario> usuarios = UsuDAO.getVarios();
                 request.setAttribute("listaUsuarios", usuarios);
 
                 request.setAttribute("varMsg", true);
@@ -53,7 +54,7 @@ public class UsuarioExcluirServlet extends HttpServlet {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/ti/listagem_usuarios.jsp");
                 dispatcher.forward(request, response);
             } else {
-                ArrayList<Usuario> usuarios = UsuarioDAO.getUsuarios();
+                ArrayList<Usuario> usuarios = UsuDAO.getVarios();
                 request.setAttribute("listaUsuarios", usuarios);
 
                 request.setAttribute("varMsg", true);
