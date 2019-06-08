@@ -162,15 +162,15 @@
                                     <c:when test="${acao == 'editar'}">
                                         <select class="custom-select inputForm" id="tipo" name="tipo">
                                             <option hidden="" value="${tipoCadastrado}">${tipoCadastrado}</option>
-                                            <option value="Produto">Produto</option>
-                                            <option value="Serviço">Serviço</option>
+                                            <option value="Natural">Natural</option>
+                                            <option value="Artificial">Artificial</option>
                                         </select>
                                     </c:when>
                                     <c:otherwise>
                                         <select class="custom-select inputForm" id="tipo" name="tipo">
                                             <option disabled="" selected="" hidden="">Tipo do produto</option>
-                                            <option value="Produto">Produto</option>
-                                            <option value="Serviço">Serviço</option>
+                                            <option value="Natural">Natural</option>
+                                            <option value="Artificial">Artificial</option>
                                         </select>
                                     </c:otherwise>
                                 </c:choose>
